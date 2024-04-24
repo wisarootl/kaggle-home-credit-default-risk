@@ -1,5 +1,5 @@
 import pandas as pd
-from ml_assemblr.main_components.constant import SPLIT, TEST, TRAIN
+import numpy as np
 
 from home_credit_helper.config import HomeCreditRunnerConfigs
 from home_credit_helper.constant import (
@@ -13,10 +13,16 @@ from home_credit_helper.constant import (
     POS_CASH_BALANCES,
     PREV_APPS,
     PRIMARY_KEY,
+    SPLIT,
+    TEST,
+    TRAIN,
+    PRODUCTION,
 )
 
 
-def get_dfs(cfg: HomeCreditRunnerConfigs, table_names: set = ALL_TABLE_NAMES) -> dict[str, pd.DataFrame]:
+def get_dfs(
+    cfg: HomeCreditRunnerConfigs, table_names: set = ALL_TABLE_NAMES, test_size: float = 0.1
+) -> dict[str, pd.DataFrame]:
     dfs = {}
 
     if APPLICATIONS in table_names:
@@ -28,7 +34,10 @@ def get_dfs(cfg: HomeCreditRunnerConfigs, table_names: set = ALL_TABLE_NAMES) ->
             df_test = df_test[df_test[PRIMARY_KEY].isin(cfg.relevant_pks)]
 
         df_main[SPLIT] = TRAIN
-        df_test[SPLIT] = TEST
+        test_indices = np.random.choice(df_main.index, size=int(test_size * len(df_main)), replace=False)
+        df_main.loc[test_indices, SPLIT] = TEST
+
+        df_test[SPLIT] = PRODUCTION
         df_main = pd.concat([df_main, df_test]).reset_index(drop=True)
 
         if APPLICATIONS in table_names:

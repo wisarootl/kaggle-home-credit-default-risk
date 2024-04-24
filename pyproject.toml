@@ -13,6 +13,8 @@ pydantic-settings = "^2.2.1"
 pandas = "*"
 numpy = "*"
 scikit-learn = "*"
+structlog = "^24.1.0"
+orjson = "^3.10.1"
 
 [tool.poetry.group.dev.dependencies]
 black = { version = "^24.2.0", extras = ["jupyter"] }
@@ -25,6 +27,13 @@ nbformat = "^5.9.0"
 poetry-plugin-export = "^1.7.1"
 matplotlib = "^3.8.4"
 seaborn = "^0.13.2"
+lightgbm = "*"
+xgboost = "*"
+catboost = "*"
+optuna = "*"
+optuna-integration = "*"
+optuna-dashboard = "*"
+shap = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.1.1"

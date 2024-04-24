@@ -1,3 +1,14 @@
+from ml_assemblr.main_components.constant import (
+    MAIN,
+    TRAIN,
+    VALID,
+    TEST,
+    PRODUCTION,
+    SPLIT,
+)
+
+from ml_assemblr.utils.string_case_utils import to_screaming_snake_case
+
 # table names
 APPLICATIONS = "applications"
 BUREAUS = "bureaus"
@@ -21,3 +32,9 @@ ALL_TABLE_NAMES = {
 # table keys
 PRIMARY_KEY = "SK_ID_CURR"
 BUREAU_KEY = "SK_ID_BUREAU"
+
+# Column nams
+LABEL = "TARGET"
+
+# clean column names for project
+SPLIT = to_screaming_snake_case(SPLIT)
